@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Page-Enter" content="revealTrans(Duration=5.0,Transition=23)">
+<meta http-equiv="Content-Language" content="zh-tw">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Dobby is going to be free</title>
+
+<style>
+div { display:inline; }
+#day,#ho,#min,#sec{
+	display:inline;
+	text-align:center;
+	font-size:65px;
+	color:#1069B5;
+}
+
+#blue{
+	display:inline;
+	font-size:60px;
+	color:#1069B5;
+}
+</style>
+
+<script language="JavaScript">
+
+var toDay = new Date("JUN 3, 2019 00:00:00")
+var secondms = 1000
+var minesms = 60 * secondms
+var hoursms = 60 * minesms
+var daysms = 24 * hoursms
+
+function clock()
+{
+	var time = new Date()
+	var diffms = toDay.getTime() - time.getTime()
+	
+	var diffDays = Math.floor(diffms / daysms)
+	diffms -= diffDays * daysms
+	var diffHours = Math.floor(diffms / hoursms)
+	diffms -= diffHours * hoursms
+	var diffMins = Math.floor(diffms / minesms)
+	diffms -= diffMins * minesms
+	var diffSeconds = Math.floor(diffms / secondms)
+	
+	day.innerHTML = diffDays;
+	ho.innerHTML = diffHours
+	min.innerHTML = diffMins
+	sec.innerHTML = diffSeconds
+	
+	setTimeout("clock()",1000)
+} 
+</script>
+
+</head>
+
+<body onload="clock();return true" scroll="no">
+
+<table align='center' height="800">
+	<tr>
+		<td>
+			<div id="blue"></div><div id="day"></div>Days<div id="ho"></div>Hours<div id="min"></div>Mins<div id="sec"></div>Secs<br><br>
+		</td>
+	</tr>
+</table>
+
+</body>
+</html> 
+
+
+
