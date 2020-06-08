@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>food-type</title>
+
+</head>
+
+<body>
+    <input type="text" id="input" style="font-size:30px; width:276px;" oninput="lookUpFood()"><br>
+    <textarea id="result" style="font-size:30px; width:276px; resize: none;" readonly></textarea>
+</body>
+
+<script>
+    const food = {
+        '溫熱性': [
+            '龍眼', '荔枝', '芒果', '榴槤', '櫻桃', '柿餅', '金桔皮',
+            '蔥', '韭菜', '大蒜', '紅鳳菜', '薑', '洋蔥', '紅薯', '榨菜',
+            '辣椒', '醃破布子', '紅杏菜', '九層塔', '香菜',
+            '炒芝麻', '花生',
+            '羊肉', '鱔魚', '鯉魚', '鰻魚', '羊奶', '鵝肉', '河豚', '白帶魚', '鹹蛋', '雞肉', '草魚', '鰱魚', '土虱', '鯰魚',
+            '麻油', '茴香', '乳酪', '沙茶醬', '肉桂', '咖哩', '芥末', '花生油',
+            '花椒', '胡椒', '紅糖', '燒烤油炸',
+            '咖啡', '白酒'
+        ],
+
+        '平性': [
+            '芭樂', '蘋果', '釋迦', '葡萄', '柳橙', '枇杷', '甘蔗', '紅柿子',
+            '橄欖', '梅子', '木瓜', '草莓', '檸檬', '棗子', '桃子', '香蕉', '桑椹',
+            '菠菜', '豆芽', '茼蒿', '萵苣', '芋頭', '牛蒡', '蓮子', '馬鈴薯',
+            '南瓜', '葫蘆', '香菇', '百合', '山藥', '枸杞', '青椒', '黑木耳',
+            '四季豆', '結頭菜', '青江菜', '芥藍菜', '黃秋葵', '蕃薯',
+            '高麗菜', '蕃薯葉', '紅蘿蔔', '狗尾草', '花椰菜',
+            '玉米', '菱角', '黑豆', '生芝麻', '紅豆', '豌豆', '黃豆', '皇帝豆',
+            '薏苡仁', '米飯類',
+            '豬血', '烏賊', '牛奶', '鱉（甲魚）', '牛肉', '燕窩', '一般魚肉',
+            '泥鰍', '牡蠣', '干貝', '鮑魚', '雞蛋', '海參', '豬肉',
+            '茶油', '果糖', '蠔油', '橄欖油', '醋', '鹽', '蜜', '醬油', '葵花油',
+            '楓糖', '沙拉油', '白砂糖',
+            '熟茶', '擂茶'
+        ],
+
+        '寒涼性': [
+            '西瓜', '水梨', '李子', '柚子', '葡萄柚', '奇異果', '椰子', '橘子',
+            '山竹', '硬柿子', '蕃茄', '蓮霧', '鳳梨', '香瓜',
+            '五葉松', '大白菜', '小白菜', '石蓮花', '金針菇', '竹筍', '芥菜',
+            '金線蓮', '明日葉', '白木耳', '空心菜', '白蘿蔔', '莧菜', '過貓',
+            '苦瓜', '黃瓜', '蘆筍', '紫菜', '荸薺', '蓮藕', '龍鬚菜', '半天筍',
+            '草菇', '絲瓜', '冬瓜', '海帶', '芹菜', '茄子', '茭白筍', '綠豆',
+            '蝦', '田雞', '蛤蠣', '蟹', '鴨蛋', '鴨肉', '蜆', '皮蛋', '田螺',
+            '味精',
+            '啤酒', '綠茶'
+        ]
+    };
+
+    function addToDict(dict, word, item) {
+        let l = [];
+        if (word in dict) {
+            l = dict[word];
+        }
+        l.push(item);
+        dict[word] = l;
+    }
+
+    const words2List = {};
+    for (let [t, foodName] of Object.entries(food)) {
+        for (var item of foodName) {
+            const ft = { 'name': item, 'type': t };
+            for (var i = 0; i < item.length; i++) {
+                addToDict(words2List, item.substring(i, i + 1), ft);
+                for (var j = i - 1; j >= 0; j--) {
+                    addToDict(words2List, item.substring(j, i + 1), ft);
+                }
+            }
+        }
+    }
+
+    function lookUpFood() {
+        result.textContent = "";
+        if (input.value in words2List) {
+            const l = words2List[input.value];
+            for (var v of l) {
+                if (result.textContent != '') {
+                    result.textContent += '\n';
+                }
+                result.textContent += v.name + " " + v.type;
+                console.log(v.name, v.type);
+            }
+        }
+        result.style.height = "5px"
+        result.style.height = (result.scrollHeight)+"px";
+    }
+
+</script>
+
+
+</html>
